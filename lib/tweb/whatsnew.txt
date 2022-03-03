@@ -1,0 +1,173 @@
+16/09/2021
+==========
+Enchanced	TWebBrwSelect() has aFormmatter parameter.See brwselect3
+
+13/09/2021
+==========
+Bug		  Brwose: Now control multiple selects with multiple browse ara ok. See browse-select-radio2.prg
+
+08/09/2021
+==========
+Enchanced Browse. Clause INIT... CHECKED aChecked. See browse-select-checked.prg 
+
+Vrs. 1.4
+--------------------------------------------------------------------------------
+17/08/2021
+==========
+Enchanced  Dialog bootstrap draggable. See MsgInfo.prg
+
+15/08/2021
+==========
+Enhanced   Browse Add col HIDDEN clause. See browse-edit-dbf 
+		   Virtual col (TYPE 'V'), now show with format if it's defined
+
+11/08/2021
+==========
+New 	   Browse Dataset. New methods lLoadAnsiToUtf8, lSaveUtf8ToAnsi	
+
+02/08/2021
+==========
+New 	   Browse method JS -> BrowseUpdate()
+
+20/06/2021
+==========
+New:       New xBrowse. One line of code for create a browse. See xBrowse.prg
+
+22/04/2021
+==========
+Enchanced: Browse select+multiselect. See browse-select.prg
+
+16/04/2021
+==========
+New: 	   MsgGet() Function. See msgget.prg
+
+13/04/2021
+==========
+Enchance: SMALL Clause CLASS. See Test10b.prg
+
+12/02/2021
+==========
+Enchance: Button clause WIDTH. See button-width.prg
+
+10/02/2021
+==========
+Enchanced: Browse clause SELECT RADIO. See browse-select-radio.prg
+
+09/02/2021
+==========
+New:      TWebIcon. See example icon.prg
+
+07/02/2021
+==========
+Enchanced Browse: Pagination is ready!. See browse-ajax-pag.prg, browse-ajax-pag2.prg
+
+30/01/2021
+==========
+Enchanced: MsgServer() if don't exist fCallback function, then would'n ajax request, redirect to url
+	  and send parameters. See msgserver4.prg
+29/01/2021
+==========
+Enchanced: Browse method EDIT... PREEDIT <cFunc>. Evaluate before save. See browse-edit-preedit.prg
+
+28/01/2021
+==========
+Enchanced: Col Browse has new type -> 'V'. When edit, show el field but you can't edit it. See browse-edit-v
+
+18/01/2021
+==========
+Enchanced: TWebIcon add span clause: See example get-span.prg 
+
+19/12/2020
+==========
+Enchanced: TWebBrwSelect() has enchanced. See example brwselect2.prg
+
+07/12/2020
+==========
+Enchanced: Add virtual-scroll. brwfast.prg 
+
+04/12/2020 Version 1.2
+======================
+Enchanced Browse: TWebBrowse ready. CRUD. See examples brw-edit.prg, brw-edit-dbf.prg
+
+24/11/2020
+==========
+Enchanced Add id in tab folder
+
+17/11/2020
+==========
+Modified: TWebGet Icon space
+Enchanced: TWebBrowse Toolbar
+Enchanced: TWebGet CLAUSE BTNID for identifier btn id
+New: Start TWebControl() for javascript. Not finish yet
+
+11/11/2020
+==========
+Enchanced: Combobox CLAUSE KeyValue. See combo-hash.prg
+
+07/11/2020
+==========
+Enchanced: MsgLoading() Can show header.
+Example: browse-dblclick-edit.prg . Thanks Ralph del Castillo
+
+02/11/2020
+==========
+New: Example switch control. See switch.prg
+Enchanced: MsgInfo accept any value
+
+24/10/2020
+==========
+New: Example sessions & autenticate with a easy app. See examples/sessions/app
+Enchanced: Command ROW. New clause TOP & BOTTOM. You can control margin-top and margin-bottom of row. See tutor8b.prg
+Enchanced: Command SAY. New clause LINK. See say-link.prg
+
+21/10/2020
+==========
+New: Sessions system is ready !. 
+	See test_session.prg, test_session_read.prg, test_session_end.prg
+
+20/10/2020
+==========
+Enchanced: New clause for get label: FONTLABEL. See get-font2
+
+19/10/2020
+==========
+New: GETNUMBER control for use in tablets. See get-num.prg
+Bug: Font solved when focus
+New: Browse Multiselect. See browse-select
+
+07/10/2020
+==========
+Example: Use HTML command. html.prg
+
+05/10/2020
+==========
+Enchanced: TWebFolder() propertie :lBorder. See folder3.prg
+Enchanced: TWebFolder() Tab clause class. See folder3.prg
+
+30/09/2020
+==========
+Enchanced: TWebGet() clause LINK. See get-link.prg
+
+29/09/2020
+==========
+New: JS TWebBrwSearch(). See brwsearch.prg
+Updated: TWebFolder() Option working
+
+28/09/2020
+==========
+Enchanced: TWebGet multi-button. See get-btn.prg
+
+27/09/2020
+==========
+Enchanced: TWebGet align
+
+
+25/09/2020
+==========
+New: TWebImage. See image.prg
+New: JS TWebBrwSelect(). Select from table a row. brwselect.prg
+
+13/09/2020
+==========
+New: Container BOX: See box.prg, box2.prg, box3.prg
+Updated: New clause CLASS to ROW/ROWGROUP 

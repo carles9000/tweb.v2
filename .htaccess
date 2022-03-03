@@ -1,0 +1,34 @@
+# -----------------------------------------------------
+# Directorio donde se almacen las sessiones.
+# Si se activa deberá crear directorio en httdocs.
+# Por defecto las sesiones se almacenan en HB_DirTemp()
+# -----------------------------------------------------
+Setenv SESSION_PATH 	'/.sessions'
+
+# -----------------------------------------------------
+# Clave por defecto de sessiones.
+# Si no se especifica, usa una interna.
+# -----------------------------------------------------
+#Setenv SESSION_KEY 	'MykeY'
+
+# -----------------------------------------------------
+# Directorio donde se almacenan los logs.
+# Si se activa deberá crear directorio en httdocs.
+# Por defecto los logs se almacenan en HB_DirTemp()
+# -----------------------------------------------------
+Setenv LOG_PATH		 	'/.logs'
+
+# -----------------------------------------------------
+# Impedir que lean los ficheros del directorio
+# -----------------------------------------------------
+Options All -Indexes
+
+# -----------------------------------------------------
+# Añadir extension si no se especifica
+# -----------------------------------------------------
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME}.prg -f
+	RewriteRule ^(.*)$ $1.prg
+</IfModule>
