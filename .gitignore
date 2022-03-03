@@ -1,4 +1,3 @@
-ace
 upload/*
 # exception to the rule
 !upload/.gitkeep 
