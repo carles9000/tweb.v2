@@ -10,7 +10,7 @@ function main()
 	hRow[ 'os' ] 						:= OS()
 	hRow[ 'harbour' ] 					:= Version()
 	hRow[ 'build' ] 					:= hb_BuildDate()
-	hRow[ 'modbuild' ] 					:= modBuildDate()
+	hRow[ 'modbuild' ] 					:= mh_modBuildDate()
 	hRow[ 'compiler' ] 					:= hb_Compiler()
 					
 	hRow[ 'rdd' ] 						:= cI

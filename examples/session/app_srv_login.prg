@@ -1,30 +1,27 @@
-//	{% LoadHrb( '../../lib/tweb/tweb.hrb' ) %}
+//	{% mh_LoadHrb( '../../lib/tweb/tweb.hrb' ) %}
 
 #include {% TWebInclude( '../../lib/tweb/' ) %}
 
 function main()
 
-	local hParam := AP_PostPairs()
+	local hParam 	:= AP_PostPairs()
+	local cUrl 		:= mh_GetUri() 
 	
-	if hParam[ 'user' ] == 'demo' .and. hParam[ 'psw' ] == '1234'
+	if !empty( hParam[ 'user' ] ) .and. hParam[ 'psw' ] == '1234' 
 	
-	
-	//	Inicio sistema de Sesiones y salvo mis variables...
-	
-		InitSession()						
-		Session( 'user',  hParam[ 'user' ] )
-		Session( 'in',  time() )
+		mh_SessionInit()
 		
-	//	Redirijo
-	
-		Redirect( 'app_menu' )			
+		mh_Session( 'user', lower( hParam[ 'user' ] ) )			
+		mh_Session( 'in', time() )			
 		
-	else
+		cUrl += 'app_menu.prg'
 	
-		Redirect( "app_login.prg" )		
-		
-	endif
+	else 
 	
-
+		cUrl += 'app_login.prg'
+	
+	endif 
+	
+	mh_Redirect( cUrl )	
 
 retu nil

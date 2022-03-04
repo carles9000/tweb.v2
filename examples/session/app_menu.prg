@@ -1,4 +1,4 @@
-//	{% LoadHrb( '../../lib/tweb/tweb.hrb' ) %}
+//	{% mh_LoadHrb( '../../lib/tweb/tweb.hrb' ) %}
 
 #include {% TWebInclude( '../../lib/tweb/' ) %}
 
@@ -8,17 +8,18 @@ function Main()
 	local cHtml := ''
 	local x := ''
 
-	//	Verifico que exista una session. Si no existe no esta autorizado.
+	//	Autentication ----------
 
-		if  ! Is_Session()
-	
-			Redirect( "app_login.prg" )				
-			retu nil
-		endif
+		if ! mh_SessionActive()
 		
-	//	Iniciamos Session
+			mh_Redirect( mh_GetUri() + 'app_login.prg')
+			
+			retu nil	
+			
+		endif 
 		
-		InitSession()	
+		mh_SessionInit()			
+	//	------------------------	
 
 	DEFINE WEB oWeb TITLE 'App' INIT
 
@@ -44,8 +45,8 @@ function Main()
 	//	Podemos recuperar variables que tenemos almacenadas en la session	
  
 		ROW o
-			SAY LABEL 'User: ' + Session( 'user' ) GRID 5 OF o
-			SAY LABEL 'Entrada a las ' + Session( 'in' ) GRID 7 OF o
+			SAY LABEL 'User: ' + mh_Session( 'user' ) GRID 5 OF o
+			SAY LABEL 'Entrada a las ' + mh_Session( 'in' ) GRID 7 OF o
 		ENDROW o 
 
 	END FORM o		

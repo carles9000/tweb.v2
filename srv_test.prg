@@ -5,6 +5,6 @@ function main()
 	local uValue := GetMsgServer()
 	
 	?? 'Type: ' + valtype( uValue )
-	? valtochar(uValue)
+	? mh_valtochar(uValue)
 	
 retu nil
