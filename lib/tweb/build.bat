@@ -1,16 +1,14 @@
 @echo off
 @cls
-@set path=c:\xampp\htdocs\master\harbour
-@set include=c:\xampp\htdocs\master\harbour\include
-
-del ..\tweb\tweb.hrb
-
+@set path=c:\harbour\bin
+@set include=c:\harbour\include
 
 @echo ===========================================
 @echo Building TWeb ( GUI Bootstrap for Harbour )
 @echo ===========================================
 
 harbour tweb.prg /n /w /gh
+
 
 @echo =================
 @echo Copia a modpack !
@@ -21,6 +19,5 @@ copy tweb.js  c:\xampp\htdocs\master\modpack.dist\lib\tweb\tweb.js
 copy tweb.hrb c:\xampp\htdocs\master\modpack.dist\lib\tweb\tweb.hrb
 
 copy tweb.hrb c:\xampp\htdocs\master\mercury.v2\apps\so\lib\tweb\tweb.hrb
-
 
 pause

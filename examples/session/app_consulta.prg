@@ -1,4 +1,4 @@
-//	{% LoadHrb( '../../lib/tweb/tweb.hrb' ) %}
+//	{% mh_LoadHrb( '../../lib/tweb/tweb.hrb' ) %}
 
 #include {% TWebInclude( '../../lib/tweb/' ) %}
 
@@ -6,16 +6,21 @@ function main()
 
     LOCAL o, oCol, oBrw
 	LOCAL cHtml := ''
-	LOcAL oWeb
+	LOcAL oWeb	
 	
-	//	Verifico que exista una session. Si no existe no esta autorizado.
+	//	Autentication ----------
 
-		if  ! Is_Session()
-	
-			Redirect( "app_login.prg" )				
-			retu nil
-		endif	
-	
+		if ! mh_SessionActive()
+		
+			mh_Redirect( mh_GetUri() + 'app_login.prg')
+			
+			retu nil	
+			
+		endif 
+		
+		mh_SessionInit()			
+	//	------------------------
+
 	
 	DEFINE WEB oWeb TITLE 'Test Browse' TABLES INIT
 	

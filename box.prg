@@ -1,4 +1,4 @@
-//	{% mh_mh_LoadHrb( 'lib/tweb/tweb.hrb' ) %}
+//	{% mh_LoadHrb( 'lib/tweb/tweb.hrb' ) %}
 
 #include {% TWebInclude() %}
 

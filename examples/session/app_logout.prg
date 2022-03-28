@@ -1,16 +1,19 @@
-//	{% LoadHrb( '../../lib/tweb/tweb.hrb' ) %}
+//	{% mh_LoadHrb( '../../lib/tweb/tweb.hrb' ) %}
 
 #include {% TWebInclude( '../../lib/tweb/' ) %}
 
 function main()
 
-	//	Cierro sesiones
+	if ! mh_SessionActive()
 	
-		EndSession()	
+		mh_Redirect( mh_GetUri() + 'app.prg')
 		
-	//	Redirijo
-	
-		Redirect( 'app.prg' )			
+		retu nil	
+		
+	endif 
 
+	mh_SessionEnd()
+	
+	mh_Redirect( mh_GetUri() + 'app.prg')		
 
 retu nil

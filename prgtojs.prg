@@ -18,11 +18,11 @@ function main()
 	??	'<h3>Go to console...</h3><hr>'
 	
 	?	'String', cString
-	?	'Numeric', valtochar( nNumeric )
-	?	'Logic', valtochar( lLogic )
-	?	'Date', valtochar( dDate )
-	?	'Hash', valtochar( hData )
-	?	'Array', valtochar( aFruits )
+	?	'Numeric', mh_valtochar( nNumeric )
+	?	'Logic', mh_valtochar( lLogic )
+	?	'Date', mh_valtochar( dDate )
+	?	'Hash', mh_valtochar( hData )
+	?	'Array', mh_valtochar( aFruits )
 	
 	
 	TEXT TO cHtml PARAMS cString, nNumeric, lLogic, dDate, hData, aFruits					

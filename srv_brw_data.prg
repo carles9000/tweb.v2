@@ -119,7 +119,7 @@ function MaxAge( o, uValue, hRow )
 	
 	if !lValid
 		o:SetError( '[' + mh_valtochar(hRow['_recno']) + '] <b>Age</b> Value out of range: ' + mh_valtochar( uValue ) )
-		//o:SetError( { 'recno' => hRow['_recno'], 'msg' => '<b>Age</b> Value out of range: ' + mh_valtochar( uValue ) }  )
+
 	endif	
 
 retu  lValid
@@ -130,7 +130,7 @@ function NoPPP( o, uValue, hRow)
 	
 	if uValue == 'PPP'
 		o:SetError( '[' + mh_valtochar(hRow['_recno']) + '] <b>Street</b> PPP no permitido' )
-		//o:SetError( { 'recno' => hRow['_recno'], 'msg' => '<b>Street</b> PPP no permitido'}  )
+
 		lValid := .f.
 	endif	
 	

@@ -15,7 +15,7 @@ function main()
 		ROWGROUP o
 		
 			GET ID 'myid' VALUE '123' GRID 12 LABEL 'Id.' ;				
-				BUTTON 'Go' LINK 'https://modharbour.app/compass'  OF o				
+				BUTTON 'Go' LINK 'https://forum.modharbour.app/'  OF o				
 		
 		ENDROW o	
 		

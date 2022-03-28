@@ -11,7 +11,7 @@ function main()
 
 	DEFINE FORM o ID 'demo'
 		o:lDessign  := .T.
-		o:cType     := 'xs'     //  xs,sm,md,lg
+		o:cType     := 'md'     //  xs,sm,md,lg
 		o:cSizing   := ''     	//  sm,lg
 
 	HTML o
