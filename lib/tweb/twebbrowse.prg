@@ -652,6 +652,8 @@ METHOD Field( cField, lUpdate, bValidate, lEscape ) CLASS TBrwDataset
 	DEFAULT lUpdate TO .F.
 	DEFAULT lEscape TO .T.
 	
+
+	
 	oItem[ 'field' ] 		:= cField 	
 	oItem[ 'field_pos' ] 	:= (::cAlias)->( FIELDPOS( cField ) )
 	oItem[ 'field_type' ] 	:= ValType(FieldGet( (::cAlias)->( FIELDPOS( cField ) )))
@@ -735,17 +737,20 @@ METHOD Save( aRows ) CLASS TBrwDataset
 	for nI := 1 to nRows 
 
 		cAction := aRows[ nI ][ 'action' ]
+		cAction := aRows[ nI ][ 'action' ]
 		cId 	:= aRows[ nI ][ 'id' ]
 		hRow 	:= aRows[ nI ][ 'row' ]
 		nRecno  := 0
 		
+	
+
 		lValid		:= .T.
 		
 
 		if valtype( ::bBeforeSave ) == 'B' 	
 			lValid := eval( ::bBeforeSave, Self, hRow, cAction )
 		endif
-		
+
 		if lValid 
 		
 			lUpdated := .F. 
@@ -753,12 +758,14 @@ METHOD Save( aRows ) CLASS TBrwDataset
 			do case
 			
 				case cAction == 'A' 
-				
+			
 					::ReadRow( hRow )
+			
 				
 					if ::ValidRow( hRow ) 
-				
+		
 						(::cAlias)->( DbAppend() )
+					
 					
 						lUpdated := ::SaveRow( hRow )
 						
@@ -769,10 +776,12 @@ METHOD Save( aRows ) CLASS TBrwDataset
 					::ReadRow( hRow )
 			
 				
-					if ::ValidRow( hRow ) 				
+					if ::ValidRow( hRow ) 	
+
+						nRecno  := if( valtype(hRow[ '_recno' ]) == 'N', hRow[ '_recno' ], val(hRow[ '_recno' ]) )						
 				
 				
-						(::cAlias)->( DbGoTo( hRow[ '_recno' ] ) )
+						(::cAlias)->( DbGoTo( nRecno ) )
 			
 						
 						if (::cAlias)->( DbRlock() )
@@ -785,7 +794,10 @@ METHOD Save( aRows ) CLASS TBrwDataset
 					
 				case cAction == 'D'
 				
-					(::cAlias)->( DbGoTo( hRow[ '_recno' ] ) )
+					nRecno  := if( valtype(hRow[ '_recno' ]) == 'N', hRow[ '_recno' ], val(hRow[ '_recno' ]) )
+
+
+					(::cAlias)->( DbGoTo( nRecno ) ) 
 					
 					if (::cAlias)->( DbRlock() )				
 						(::cAlias)->( DbDelete() )				
@@ -827,12 +839,12 @@ METHOD SaveRow( hRow ) CLASS TBrwDataset
 	LOCAL bErrorHandler, bLastHandler 
 	
 	//	Recojemos valores
-	
+
 	for nI := 1 to nLen  
 	
 		cField 			:= ::aFields[nI][ 'field' ]
 		cField_Type 	:= ::aFields[nI][ 'field_type' ]
-		nField_Pos 		:= ::aFields[nI][ 'field_pos' ]
+		nField_Pos 	:= ::aFields[nI][ 'field_pos' ]
 		lUpdate 		:= ::aFields[nI][ 'update' ]						
 
 		if lUpdate .and. HB_HHasKey( hRow, cField )
@@ -909,7 +921,7 @@ METHOD ReadRow( hRow ) CLASS TBrwDataset
 	
 		cField 			:= ::aFields[nI][ 'field' ]
 		cField_Type 	:= ::aFields[nI][ 'field_type' ]
-		nField_Pos 		:= ::aFields[nI][ 'field_pos' ]
+		nField_Pos 	:= ::aFields[nI][ 'field_pos' ]
 		lUpdate 		:= ::aFields[nI][ 'update' ]						
 
 		if lUpdate .and. HB_HHasKey( hRow, cField )

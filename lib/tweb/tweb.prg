@@ -86,7 +86,7 @@ function LoadTWebTables( cUrl )
 	if right( cUrl, 1 ) != cSep 
 		cUrl += cSep
 	endif
-
+_d( 'LOADSTWEBTABLES', cUrl  )
 	cHtml := TWebLibs( cUrl )
 	cHtml += TWebLibsTables( cUrl )	
 	
