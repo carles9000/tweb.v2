@@ -28,7 +28,7 @@ function LoadData()
 	local cAlias 		:= oDataset:Alias()
 	local aRows     	:= {}
 	local hResponse 	
-
+			
 	//	Process data...
 	
 		WHILE (cAlias)->( !Eof() )
@@ -53,7 +53,7 @@ function SaveData( aData )
 	local oDataset			:= Open()
 	local nUpdated 		:= 0
 	local aUpdated 		:= 0
-	local hResponse 
+	local hResponse 		
 	
 	//	Process data...	
 	
@@ -103,13 +103,17 @@ function MyDataset( cAlias )
 		FIELD 'married'  	UPDATE 	OF o
 		FIELD 'age'    		UPDATE 	VALID {|o, uValue, hRow| MaxAge( o, uValue, hRow ) } OF o
 		FIELD 'notes'  		UPDATE	NOESCAPE OF o	
+		
+	//	Example field calculated	(Simply add 10 to age)
+		FIELD 'age_10' 		CALCULATED {|cAlias| (cAlias)->age + 10 } OF o
+	
+		
 		//FIELD 'salary'  		OF o		//	we can't use this field. Top secret ! 
 	
 	
 	//	o:bBeforeSave := {|cAlias, uValue, hRow| MaxAge( cAlias, uValue, hRow ) }
 	
-	//	o:Field( 'virtual', nil, {|cAlias, row| Virtual(cAlias, row) } )
-	
+		
 retu o
 
 function MaxAge( o, uValue, hRow ) 

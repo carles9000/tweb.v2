@@ -19,5 +19,6 @@ copy tweb.js  c:\xampp\htdocs\master\modpack.dist\lib\tweb\tweb.js
 copy tweb.hrb c:\xampp\htdocs\master\modpack.dist\lib\tweb\tweb.hrb
 
 copy tweb.hrb c:\xampp\htdocs\master\mercury.v2\apps\so\lib\tweb\tweb.hrb
+copy tweb.ch c:\xampp\htdocs\master\mercury.v2\apps\so\lib\tweb\tweb.ch
 
 pause

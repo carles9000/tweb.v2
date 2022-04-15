@@ -9,6 +9,8 @@ function main()
 	DEFINE WEB oWeb TITLE 'CRUD Browse - Edit Dbf Lite' TABLES INIT
 	
 	DEFINE FORM o
+	
+		//o:lDessign := .t.
 
 		HTML o INLINE '<h3>CRUD Browse</h3><hr>'
 		
@@ -40,15 +42,19 @@ function main()
 			EDIT UNIQUEID '_recno';
 			TOOLBAR "bar" ;
 			SEARCH TOOLS EXPORT PRINT  ;
-			OF o			
+			OF o	
+
+			//oBrw:cLocale := 'es-ES'
+			oBrw:cLocale := 'EN'
 
 			ADD oCol TO oBrw ID '_recno'	HEADER 'Recno' 		EDIT TYPE 'V' ALIGN 'center' SORT WIDTH 80 
 			ADD oCol TO oBrw ID 'first'	    HEADER 'First' 		EDIT SORT
 			ADD oCol TO oBrw ID 'last'		HEADER 'Last' 		EDIT SORT
-			ADD oCol TO oBrw ID 'street'	HEADER 'Street'		EDIT TYPE 'V'
+			ADD oCol TO oBrw ID 'street'	HEADER 'Street'		EDIT TYPE 'V'		// VIEW
 			ADD oCol TO oBrw ID 'married'	HEADER 'Married'	EDIT TYPE "L"
 			ADD oCol TO oBrw ID 'hiredate'	HEADER 'Hiredate'	EDIT TYPE 'D'
-			ADD oCol TO oBrw ID 'age'		HEADER 'Age'		EDIT 
+			ADD oCol TO oBrw ID 'age'		HEADER 'Age'		EDIT TYPE 'N'
+			ADD oCol TO oBrw ID 'age_10'	HEADER 'Age_10'		
 			ADD oCol TO oBrw ID 'notes'		HEADER 'Notes'		EDIT ESCAPE 				
 
 		INIT BROWSE oBrw 
@@ -71,7 +77,8 @@ function main()
 						MsgServer( 'srv_brw_data.prg', oParam, Post_Load )
 					}
 					
-					function Post_Load( dat ){
+					function Post_Load( dat ){					
+				
 								
 						oBrw.Loading( false )				
 

@@ -614,6 +614,7 @@ CLASS TBrwDataset
 
 	DATA cAlias							INIT ''
 	DATA aError							INIT {}
+	DATA cError							INIT ''
 	DATA aFields						INIT {}
 	DATA bBeforeSave					INIT NIL 
 
@@ -644,7 +645,7 @@ METHOD New( cAlias ) CLASS TBrwDataset
 	
 RETU Self 
 
-METHOD Field( cField, lUpdate, bValidate, lEscape ) CLASS TBrwDataset 
+METHOD Field( cField, lUpdate, bValidate, lEscape, bCalculated ) CLASS TBrwDataset 
 
 	local oItem 	:= {=>}
 	
@@ -655,8 +656,17 @@ METHOD Field( cField, lUpdate, bValidate, lEscape ) CLASS TBrwDataset
 
 	
 	oItem[ 'field' ] 		:= cField 	
-	oItem[ 'field_pos' ] 	:= (::cAlias)->( FIELDPOS( cField ) )
-	oItem[ 'field_type' ] 	:= ValType(FieldGet( (::cAlias)->( FIELDPOS( cField ) )))
+	
+	if valtype( bCalculated ) == 'B'
+		oItem[ 'field_pos' ] 	:= 0
+		oItem[ 'field_type' ] 	:= 'Z'
+		oItem[ 'calculated' ]	:= bCalculated
+	else
+		oItem[ 'field_pos' ] 	:= (::cAlias)->( FIELDPOS( cField ) )
+		oItem[ 'field_type' ] 	:= ValType(FieldGet( (::cAlias)->( FIELDPOS( cField ) )))
+		oItem[ 'calculated' ]	:= nil 
+	endif
+	
 	oItem[ 'update' ] 		:= lUpdate
 	oItem[ 'validate' ] 	:= bValidate
 	oItem[ 'escape' ] 		:= lEscape
@@ -676,7 +686,7 @@ METHOD Row() CLASS TBrwDataset
 
 	
 	hRow[ '_recno' ] := (::cAlias)->( Recno() )
-	
+
 	for nI := 1 to nLen  
 	
 		cField 		 	:= ::aFields[nI][ 'field' ]
@@ -698,6 +708,11 @@ METHOD Row() CLASS TBrwDataset
 				
 				
 			case cField_Type == 'D'  ; uValue := DToC( (::cAlias)->( FieldGet( ::aFields[nI][ 'field_pos' ] ) ) )
+			
+			case cField_Type == 'Z'  
+				
+				uValue := Eval( ::aFields[nI][ 'calculated' ], ::cAlias )
+				
 			otherwise
 				uValue := (::cAlias)->( FieldGet( ::aFields[nI][ 'field_pos' ] ) )
 		endcase
@@ -731,21 +746,21 @@ METHOD Save( aRows ) CLASS TBrwDataset
 	local aRowsUpdated 	:= {}
 	local aProcess	 		:= {}
 	local cFormat 			:= Set( _SET_DATEFORMAT, 'YYYY-MM-DD' )
-	local nI, cAction, hRow, lValid, lUpdated, cId, nRecno, cMsg   
+	local nI, cAction, hRow, lValid, lUpdated, cId, nRecno, cMsg , lLock
 
 
 	for nI := 1 to nRows 
-
+	
+		
 		cAction := aRows[ nI ][ 'action' ]
-		cAction := aRows[ nI ][ 'action' ]
-		cId 	:= aRows[ nI ][ 'id' ]
-		hRow 	:= aRows[ nI ][ 'row' ]
+		cId 	 := aRows[ nI ][ 'id' ]
+		hRow 	 := aRows[ nI ][ 'row' ]
 		nRecno  := 0
 		
 	
+		lValid		:= .T.	
 
-		lValid		:= .T.
-		
+		::cError  := ''		
 
 		if valtype( ::bBeforeSave ) == 'B' 	
 			lValid := eval( ::bBeforeSave, Self, hRow, cAction )
@@ -754,37 +769,43 @@ METHOD Save( aRows ) CLASS TBrwDataset
 		if lValid 
 		
 			lUpdated := .F. 
+			
 		
 			do case
 			
 				case cAction == 'A' 
-			
-					::ReadRow( hRow )
-			
-				
-					if ::ValidRow( hRow ) 
 		
-						(::cAlias)->( DbAppend() )
+					//::ReadRow( hRow )			
+				
+					if ::ValidRow( hRow, 'A' ) 		
+
+						(::cAlias)->( DbAppend() )					
 					
-					
-						lUpdated := ::SaveRow( hRow )
+						lUpdated := ::SaveRow( hRow )		
 						
 					endif
 					
 				case cAction == 'U'
 			
-					::ReadRow( hRow )
-			
+					::ReadRow( hRow )			
 				
-					if ::ValidRow( hRow ) 	
-
-						nRecno  := if( valtype(hRow[ '_recno' ]) == 'N', hRow[ '_recno' ], val(hRow[ '_recno' ]) )						
-				
-				
-						(::cAlias)->( DbGoTo( nRecno ) )
-			
+					if ::ValidRow( hRow, 'U' ) 	
 						
-						if (::cAlias)->( DbRlock() )
+						if  valtype( hRow[ '_recno' ] ) == 'N'
+							nRecno := hRow[ '_recno' ] 
+							(::cAlias)->( DbGoTo( nRecno ) )
+							lLock := (::cAlias)->( DbRlock() )
+						else 
+							if At( '$', hRow[ '_recno' ] ) > 0 
+								(::cAlias)->( DbAppend() )	
+								lLock := .t.
+							else 								
+								(::cAlias)->( DbGoTo( val(hRow[ '_recno' ]) ) )
+								lLock := (::cAlias)->( DbRlock() )								
+							endif 
+						endif								
+			
+						if lLock 
 					
 							lUpdated := ::SaveRow( hRow )
 							
@@ -796,37 +817,52 @@ METHOD Save( aRows ) CLASS TBrwDataset
 				
 					nRecno  := if( valtype(hRow[ '_recno' ]) == 'N', hRow[ '_recno' ], val(hRow[ '_recno' ]) )
 
-
-					(::cAlias)->( DbGoTo( nRecno ) ) 
+					if ::ValidRow( hRow, 'D' ) 	
 					
-					if (::cAlias)->( DbRlock() )				
-						(::cAlias)->( DbDelete() )				
-						lUpdated := .T.				
-					endif															
+						(::cAlias)->( DbGoTo( nRecno ) ) 
+						
+						if (::cAlias)->( DbRlock() )				
+							(::cAlias)->( DbDelete() )				
+							lUpdated := .T.				
+						endif															
+					
+					endif
 			
-			endcase 	
-
-			
+			endcase 				
 			
 			Aadd( aProcess, { 'success' 	=> lUpdated,;
-								'id' 		=> hRow[ '_recno' ],;
+								'id' 		=> cId,; 			//hRow[ '_recno' ],;
 								'action' 	=> cAction, ;
 								'item' 		=> if( lUpdated,::Row(), nil) ,;
-								'msg' 		=> ::GetErrorString()	 } )
+								'msg' 		=> ::cError	 } )
 
 		else 
 		
 			Aadd( aProcess, { 'success' 	=> .F. ,;
-								'id' 		=> hRow[ '_recno' ],;
+								'id' 		=> cId,;		//hRow[ '_recno' ],;
 								'action' 	=> cAction, ;
 								'item' 		=> nil ,;
-								'msg' 		=> ::GetErrorString()	 } )		
+								'msg' 		=> ::cError	 } )		
 		endif 
 		
 	
 	next
 	
 	Set( _SET_DATEFORMAT, cFormat )
+	
+	//	Proccess aProcess....
+	
+	::aError := {}
+	
+	for nI := 1 to len(aProcess)
+	
+		if aProcess[nI][ 'success' ] == .F. 
+		
+			Aadd( ::aError, aProcess[nI] )
+		
+		endif 
+	
+	next 			
 
 RETU aProcess 
 
@@ -870,6 +906,9 @@ METHOD SaveRow( hRow ) CLASS TBrwDataset
 					else
 						::aFields[nI][ 'value' ] := hRow[ cField ]										
 					endif
+					
+				case cField_Type == 'Z'	
+				
 				otherwise				
 					::aFields[nI][ 'value' ] :=  hRow[ cField ]
 			endcase			
@@ -951,7 +990,7 @@ METHOD ReadRow( hRow ) CLASS TBrwDataset
 
 RETU nil
 
-METHOD ValidRow( hRow ) CLASS TBrwDataset 
+METHOD ValidRow( hRow, cAction ) CLASS TBrwDataset 
 
 	local nLen 		:= len( ::aFields )
 	local lValid 	:= .t.
@@ -964,15 +1003,15 @@ METHOD ValidRow( hRow ) CLASS TBrwDataset
 	for nI := 1 to nLen  
 	
 		cField 			:= ::aFields[nI][ 'field' ]		
-		nField_Pos 		:= ::aFields[nI][ 'field_pos' ]
+		nField_Pos 	:= ::aFields[nI][ 'field_pos' ]
 		lUpdate 		:= ::aFields[nI][ 'update' ]				
-		bValid 			:= ::aFields[nI][ 'validate' ]
+		bValid 			:= ::aFields[nI][ 'validate' ]			
 
-		if lUpdate .and. valtype( bValid ) == 'B'  .and. HB_HHasKey( hRow, cField ) 		
+		if lUpdate .and. !( cField == 'Z' ) .and. valtype( bValid ) == 'B'  .and. HB_HHasKey( hRow, cField ) 		
 		
-			if ! eval( bValid, Self, ::aFields[nI][ 'value' ], hRow )
+			if ! eval( bValid, Self, hRow[ cField ], hRow, cAction )
 				lValid := .f.
-			endif
+			endif					
 			
 		endif
 		
@@ -984,6 +1023,8 @@ RETU lValid
 
 METHOD SetError( cError ) CLASS TBrwDataset 
 
+	::cError := cError 
+
 	Aadd( ::aError, cError )
 
 RETU NIL
@@ -992,6 +1033,7 @@ METHOD GetErrorString() CLASS TBrwDataset
 
 	local cError  := ''
 	local nI
+	
 	
 	for nI := 1 to len( ::aError )
 	

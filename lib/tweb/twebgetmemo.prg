@@ -84,6 +84,8 @@ METHOD Activate() CLASS TWebGetMemo
 		cHtml += ' readonly '
 	ENDIF
 	
+	cHtml += ' data-control="tgetmemo" '	
+	
 	//cHtml += ' value="' + ::uValue + '">'
 	cHtml += ' >'
 	cHtml += ::uValue

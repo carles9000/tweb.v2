@@ -4,6 +4,7 @@
 
 function main()
 
-	? 'Version:', twebversion(), IsMercury() 
+	? 'Version TWeb:', twebversion()
+	? 'Version modHarbour:', mh_modVersion()	
 	
 retu nil
