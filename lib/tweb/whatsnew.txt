@@ -1,3 +1,10 @@
+19/04/2022 => 2.1.005
+=====================
+Bug 		DEFINE FORM ID <cId>. Now cId is ok in DOM
+
+
+//	---------------------------------------------------------------------------- //
+
 16/09/2021
 ==========
 Enchanced	TWebBrwSelect() has aFormmatter parameter.See brwselect3

@@ -19,6 +19,7 @@ CLASS TWebForm FROM TWebControl
 
 
 	DATA aControls					INIT {}
+	DATA cId						INIT ''		
 	DATA cAction					INIT ''		
 	DATA cMethod					INIT 'POST'
 	DATA cType						INIT ''		//	sm, md, lg, xl, xs
@@ -51,8 +52,9 @@ METHOD New( cId, cAction, cMethod ) CLASS TWebForm
 	DEFAULT cAction TO ''
 	DEFAULT cMethod TO 'POST'
 	
-	::cAction := cAction
-	::cMethod := cMethod
+	::cId 		:= cId 
+	::cAction 	:= cAction
+	::cMethod 	:= cMethod
 
 
 RETU SELF
@@ -63,7 +65,7 @@ METHOD InitForm( cClass ) CLASS TWebForm
 	
 	DEFAULT cClass TO ''
 
-	::Html( '<div class="' + cClassForm + ' ' + cClass + '" ' + IF( ::lDessign, 'style="border:2px solid green;"', '' ) + '>'  )
+	::Html( '<div id="' + ::cId + '" class="' + cClassForm + ' ' + cClass + '" ' + IF( ::lDessign, 'style="border:2px solid green;"', '' ) + '>'  )
 	
 	IF !empty( ::cAction )
 	

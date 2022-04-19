@@ -9,7 +9,7 @@
 static __TWebGlobal 	
 
 
-#define TWEB_VERSION 			'2.1.004'
+#define TWEB_VERSION 			'2.1.005'
 #define TWEB_VERSION_TXT		'TWeb V' + TWEB_VERSION
 #define TWEB_PATH 				'lib/tweb/'
 #define CRLF 					Chr(13)+Chr(10)
