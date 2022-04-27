@@ -2,6 +2,6 @@
 
 function main()
 
-	? 'Version:', twebversion()	
+	? 'Version TWeb:', twebversion()	
 	
 retu nil

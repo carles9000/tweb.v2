@@ -9,7 +9,7 @@ function main()
 	DEFINE WEB oWeb TITLE 'Tutor 8' INIT
 	
     DEFINE FORM o 
-		o:lDessign 	:= .T.
+		o:lDessign := .T.
 		o:lFluid 	:= .T.
 		
 	INIT FORM o
