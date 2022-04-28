@@ -11,7 +11,7 @@ function main()
 	
 	DEFINE FORM o
 
-		HTML o INLINE '<h3>CRUD Browse</h3><hr>'
+		HTML o INLINE '<h3>CRUD Browse (dbf)</h3><hr>'
 		
 		HTML o
 		

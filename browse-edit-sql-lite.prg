@@ -12,7 +12,7 @@ function main()
 	
 		//o:lDessign := .t.
 
-		HTML o INLINE '<h3>CRUD Browse (dbf)</h3><hr>'
+		HTML o INLINE '<h3>CRUD Browse (MySql)</h3><hr>'
 		
 		HTML o
 		
@@ -39,7 +39,7 @@ function main()
 		ENDDIV o 
 
 		DEFINE BROWSE oBrw ID 'ringo' MULTISELECT CLICKSELECT HEIGHT 400 ;
-			EDIT UNIQUEID '_recno';
+			EDIT UNIQUEID 'id';
 			TOOLBAR "bar" ;
 			SEARCH TOOLS EXPORT PRINT  ;
 			OF o	
@@ -47,15 +47,12 @@ function main()
 			//oBrw:cLocale := 'es-ES'
 			oBrw:cLocale := 'EN'
 
-			ADD oCol TO oBrw ID '_recno'	HEADER 'Recno' 		EDIT TYPE 'V' ALIGN 'center' SORT WIDTH 80 
-			ADD oCol TO oBrw ID 'first'	    HEADER 'First' 		EDIT SORT
+			ADD oCol TO oBrw ID 'id'			HEADER 'Id' 		EDIT TYPE 'V' ALIGN 'center' SORT WIDTH 80 
+			ADD oCol TO oBrw ID 'first'	    HEADER 'First' 	EDIT SORT
 			ADD oCol TO oBrw ID 'last'		HEADER 'Last' 		EDIT SORT
-			ADD oCol TO oBrw ID 'street'	HEADER 'Street'		EDIT TYPE 'V'		// VIEW
-			ADD oCol TO oBrw ID 'married'	HEADER 'Married'	EDIT TYPE "L"
-			ADD oCol TO oBrw ID 'hiredate'	HEADER 'Hiredate'	EDIT TYPE 'D'
-			ADD oCol TO oBrw ID 'age'		HEADER 'Age'		EDIT TYPE 'N'
-			ADD oCol TO oBrw ID 'age_10'	HEADER 'Age_10'		
-			ADD oCol TO oBrw ID 'notes'		HEADER 'Notes'		EDIT ESCAPE 				
+			ADD oCol TO oBrw ID 'street'		HEADER 'Street'		EDIT TYPE 'V'		// VIEW
+			ADD oCol TO oBrw ID 'married'		HEADER 'Married'	EDIT TYPE "L"
+			ADD oCol TO oBrw ID 'age'			HEADER 'Age'		EDIT TYPE 'N'				
 
 		INIT BROWSE oBrw 
 		
@@ -74,12 +71,11 @@ function main()
 						var oParam = new Object()
 							oParam[ 'action' ] = 'load'
 						
-						MsgServer( 'srv_brw_data.prg', oParam, Post_Load )
+						MsgServer( 'srv_brw_data_mysql.prg', oParam, Post_Load )
 					}
 					
 					function Post_Load( dat ){					
-				
-								
+	
 						oBrw.Loading( false )				
 
 						oBrw.SetData( dat.rows ) 						
@@ -87,23 +83,23 @@ function main()
 				
 				//	Save data records to server... -----------------------------
 
-					function Save() 	{ 
+					function Save() 	{ 								
 					
 						var oParam = new Object()
 							oParam[ 'action' ] = 'save'
 							oParam[ 'data'   ] = oBrw.GetDataChanges()
 					
-						MsgServer( 'srv_brw_data.prg', oParam, Post_Save )				
+						MsgServer( 'srv_brw_data_mysql.prg', oParam, Post_Save )				
 					}				
 					
 					function Post_Save( dat ) {
-										
+		
 						var cTxt = '<b>Rows updated:</b> ' + dat.updated + '<br>'						
 						
 						if ( dat.error.length > 0 ) {
 					
 							cTxt += '<b><u>Error</u></b><br>'
-							cTxt += dat.errortxt + '<br>'					
+							cTxt += dat.errortxt 				
 
 						} else {
 							
@@ -117,7 +113,7 @@ function main()
 				
 					function Edit() 	{ oBrw.Edit() }	
 					function Add()  	{ oBrw.AddRow() }	
-					function Delete() 	{ oBrw.DeleteRow() }
+					function Delete() { oBrw.DeleteRow() }
 					function Reset() 	{ oBrw.Reset() }
 		
 			</script>

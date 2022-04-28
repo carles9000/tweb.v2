@@ -1,3 +1,9 @@
+28/04/2022 => 2.1.006
+=====================
+Bug			Browse had problems with UNIQUEID = 'id' when used in database. Fixed
+			New example browse with mysql. See browse-edit-sql-lite.prg
+
+
 19/04/2022 => 2.1.005
 =====================
 Bug 		DEFINE FORM ID <cId>. Now cId is ok in DOM
