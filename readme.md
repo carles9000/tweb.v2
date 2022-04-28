@@ -1,7 +1,7 @@
 ﻿![alt text](https://i.postimg.cc/QM6v5Xqg/minilogo.png)
 
-TWeb for mod_Harbour
-====================
+TWeb for mod_Harbour.V2
+=======================
 
 Libreria .hrb para mod_harbour. La manera mas facil de crear pantallas em la web usando sintaxis de Comandos
 
