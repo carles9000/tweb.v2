@@ -36,6 +36,7 @@ function main()
 			BUTTON LABEL ' Edit' 	ACTION 'Edit()' 	CLASS 'btn-secondary mybtnbar' GRID 0 OF o
 			BUTTON LABEL ' Delete' 	ACTION 'Delete()' 	CLASS 'btn-secondary mybtnbar' GRID 0 OF o
 			BUTTON LABEL ' Save' 	ACTION 'Save()' 	CLASS 'btn-secondary mybtnbar' GRID 0 OF o
+			BUTTON LABEL ' Test' 	ACTION 'Test()' 	CLASS 'btn-secondary mybtnbar' GRID 0 OF o
 		ENDDIV o 
 
 		DEFINE BROWSE oBrw ID 'ringo' MULTISELECT CLICKSELECT HEIGHT 400 ;
@@ -87,8 +88,11 @@ function main()
 					
 						var oParam = new Object()
 							oParam[ 'action' ] = 'save'
-							oParam[ 'data'   ] = oBrw.GetDataChanges()
-					
+							oParam[ 'data'   ] = oBrw.GetDataChanges()							
+							
+							if ( oParam[ 'data' ].length == 0 )
+								return null 
+	
 						MsgServer( 'srv_brw_data_mysql.prg', oParam, Post_Save )				
 					}				
 					
@@ -115,6 +119,8 @@ function main()
 					function Add()  	{ oBrw.AddRow() }	
 					function Delete() { oBrw.DeleteRow() }
 					function Reset() 	{ oBrw.Reset() }
+					
+					function Test() 	{ oBrw.Test() }
 		
 			</script>
 		

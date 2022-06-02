@@ -105,7 +105,7 @@ return '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.m
 		'<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">' + CRLF + ;
 		'<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>' + CRLF + ;
 		'<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">' + CRLF + ;
-		'<script src="' + cUrl + 'lightbox/lightbox.min.js"></script>' + CRLF + ;
+		'<script src="' + cUrl + 'lightbox/lightbox.js"></script>' + CRLF + ;
 		'<link href="'  + cUrl + 'lightbox/css/lightbox.css" rel="stylesheet" >' + CRLF + ;		
 		'<script src="' + cUrl + 'notify/bootstrap-notify.js' + '"></script>' + CRLF + ;
 		'<script src="' + cUrl + 'bootbox/bootbox.all.min.js"></script>' + CRLF + ;		
